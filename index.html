@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COLD HEARTED NEVER BROKEN</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===== FREEZER DOOR INTRO ===== -->
+  <div id="intro-overlay">
+    <div id="freezer-container">
+      <!-- Frost buildup on the doors -->
+      <div class="frost-layer"></div>
+
+      <!-- Left door -->
+      <div class="freezer-door door-left">
+        <div class="door-inner">
+          <div class="door-handle right-handle"></div>
+          <div class="door-ridges">
+            <div class="ridge"></div>
+            <div class="ridge"></div>
+            <div class="ridge"></div>
+          </div>
+          <div class="door-frost"></div>
+        </div>
+      </div>
+
+      <!-- Right door -->
+      <div class="freezer-door door-right">
+        <div class="door-inner">
+          <div class="door-handle left-handle"></div>
+          <div class="door-ridges">
+            <div class="ridge"></div>
+            <div class="ridge"></div>
+            <div class="ridge"></div>
+          </div>
+          <div class="door-frost"></div>
+        </div>
+      </div>
+
+      <!-- Logo in the center (visible on doors) -->
+      <div id="intro-logo">
+        <img src="assets/logo.png" alt="Cold Hearted Never Broken">
+        <p class="intro-brand-name">COLD HEARTED<br>NEVER BROKEN</p>
+      </div>
+
+      <!-- Click prompt -->
+      <div id="enter-prompt">ENTER THE FREEZER</div>
+    </div>
+  </div>
+
+  <!-- Smoke video overlay (persists after intro) -->
+  <video id="smoke-video" muted loop playsinline preload="auto">
+    <source src="assets/smoke_web.mp4" type="video/mp4">
+  </video>
+
+  <!-- ===== AUTH MODAL ===== -->
+  <div id="auth-modal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+
+      <!-- Login Form -->
+      <div id="login-form" class="auth-form">
+        <h2>WELCOME BACK</h2>
+        <p class="auth-subtitle">Sign in to your account</p>
+        <div class="form-group">
+          <input type="email" id="login-email" placeholder="Email" required>
+        </div>
+        <div class="form-group">
+          <input type="password" id="login-password" placeholder="Password" required>
+        </div>
+        <button class="btn-primary" onclick="handleLogin()">SIGN IN</button>
+        <p class="auth-switch">Don't have an account? <a href="#" onclick="showSignup()">Sign Up</a></p>
+      </div>
+
+      <!-- Signup Form -->
+      <div id="signup-form" class="auth-form hidden">
+        <h2>JOIN THE FAMILY</h2>
+        <p class="auth-subtitle">Create your account</p>
+        <div class="form-group">
+          <input type="text" id="signup-name" placeholder="Full Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" id="signup-email" placeholder="Email" required>
+        </div>
+        <div class="form-group">
+          <input type="password" id="signup-password" placeholder="Password" required>
+        </div>
+        <div class="form-group">
+          <label class="dob-label">Date of Birth</label>
+          <input type="date" id="signup-dob" required>
+        </div>
+        <button class="btn-primary" onclick="handleSignup()">CREATE ACCOUNT</button>
+        <p class="auth-switch">Already have an account? <a href="#" onclick="showLogin()">Sign In</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN SITE ===== -->
+  <div id="main-site" class="hidden">
+
+    <!-- Navigation -->
+    <nav id="navbar">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo" onclick="showSection('home')">
+          <img src="assets/logo.png" alt="CHNB">
+          <span>CHNB</span>
+        </a>
+        <div class="nav-links">
+          <a href="#" class="nav-link active" data-section="home" onclick="showSection('home')">HOME</a>
+          <a href="#" class="nav-link" data-section="shop" onclick="showSection('shop')">SHOP</a>
+          <a href="#" class="nav-link freezer-link hidden" data-section="freezer" onclick="showSection('freezer')">FREEZER</a>
+          <a href="#" class="nav-link" id="account-link" onclick="openAuthModal()">ACCOUNT</a>
+        </div>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <!-- Mobile menu -->
+      <div class="mobile-menu hidden">
+        <a href="#" class="nav-link" onclick="showSection('home'); toggleMobileMenu()">HOME</a>
+        <a href="#" class="nav-link" onclick="showSection('shop'); toggleMobileMenu()">SHOP</a>
+        <a href="#" class="nav-link freezer-link hidden" onclick="showSection('freezer'); toggleMobileMenu()">FREEZER</a>
+        <a href="#" class="nav-link" id="mobile-account-link" onclick="openAuthModal(); toggleMobileMenu()">ACCOUNT</a>
+      </div>
+    </nav>
+
+    <!-- ===== HOME SECTION ===== -->
+    <section id="section-home" class="page-section">
+      <!-- Hero -->
+      <div class="hero">
+        <div class="hero-smoke"></div>
+        <div class="hero-content">
+          <img src="assets/logo.png" alt="Cold Hearted Never Broken" class="hero-logo">
+          <h1>COLD HEARTED<br>NEVER BROKEN</h1>
+          <p class="hero-tagline">STAY FROZEN. STAY SOLID.</p>
+          <button class="btn-primary btn-hero" onclick="showSection('shop')">SHOP NOW</button>
+        </div>
+      </div>
+
+      <!-- Brand statement -->
+      <div class="brand-statement">
+        <div class="container">
+          <div class="brand-text">
+            <h2>THE CULTURE IS COLD</h2>
+            <p>Born from the streets, forged in ice. Cold Hearted Never Broken isn't just a brand &mdash; it's a lifestyle. We move different. We stay solid when the world tries to break us. Every piece we drop carries that frozen energy.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Products Preview -->
+      <div class="featured-section">
+        <div class="container">
+          <h2 class="section-title">LATEST DROP</h2>
+          <div class="product-grid featured-grid" style="max-width: 360px;">
+            <div class="product-card" onclick="showSection('shop')">
+              <div class="product-image">
+                <img src="assets/shirt1.png" alt="CHNB Distressed Tee">
+                <div class="product-overlay">
+                  <span>VIEW IN 3D</span>
+                </div>
+              </div>
+              <div class="product-info">
+                <h3>FROZEN HEART TEE</h3>
+                <p class="product-price">$65.00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SHOP SECTION ===== -->
+    <section id="section-shop" class="page-section hidden">
+      <div class="shop-page">
+        <div class="shop-header">
+          <h1>THE COLLECTION</h1>
+          <p>Every piece tells a story. Stay frozen.</p>
+        </div>
+
+        <div class="product-showcase">
+          <div class="product-image-container">
+            <img src="assets/shirt1.png" alt="Frozen Heart Tee" class="product-img-main">
+          </div>
+          <div class="product-details">
+            <h2 class="product-title">FROZEN HEART TEE</h2>
+            <p class="product-subtitle">Acid wash distressed tee with hand-printed CHNB logo</p>
+            <p class="product-price-lg">$65.00</p>
+            <div class="product-sizes">
+              <span class="size-label">SIZE</span>
+              <div class="size-options">
+                <button class="size-btn" onclick="selectSize(this)">S</button>
+                <button class="size-btn" onclick="selectSize(this)">M</button>
+                <button class="size-btn active" onclick="selectSize(this)">L</button>
+                <button class="size-btn" onclick="selectSize(this)">XL</button>
+                <button class="size-btn" onclick="selectSize(this)">XXL</button>
+              </div>
+            </div>
+            <button class="btn-primary btn-add-cart">COMING SOON</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FREEZER SECTION (21+ only) ===== -->
+    <section id="section-freezer" class="page-section hidden">
+      <div class="freezer-page">
+        <div class="freezer-hero">
+          <div class="freezer-fog"></div>
+          <h1>THE FREEZER</h1>
+          <p class="freezer-subtitle">EXCLUSIVE ACCESS &bull; 21+ ONLY</p>
+        </div>
+
+        <div class="container">
+          <div class="freezer-content">
+            <!-- Instagram Feature -->
+            <div class="freezer-card ig-card">
+              <div class="freezer-card-header">
+                <div class="ig-icon">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3>@coldheartedneverbroken</h3>
+                  <p>Official Instagram</p>
+                </div>
+              </div>
+              <div class="freezer-card-body">
+                <p>Follow the movement. See the latest drops, behind-the-scenes, and exclusive content straight from the source. The culture lives on the gram.</p>
+                <a href="https://instagram.com/coldheartedneverbroken" target="_blank" class="btn-primary btn-ig">FOLLOW ON INSTAGRAM</a>
+              </div>
+            </div>
+
+            <!-- Strain Info -->
+            <div class="freezer-card strain-card">
+              <div class="freezer-card-header">
+                <div class="strain-icon">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3>THE STRAIN</h3>
+                  <p>Cold Hearted Never Broken</p>
+                </div>
+              </div>
+              <div class="freezer-card-body">
+                <p>More than just a name &mdash; it's the strain that started it all. The Cold Hearted Never Broken strain is where the brand was born. Grown with intention, smoked with purpose.</p>
+                <div class="strain-details">
+                  <div class="strain-stat">
+                    <span class="stat-label">TYPE</span>
+                    <span class="stat-value">HYBRID</span>
+                  </div>
+                  <div class="strain-stat">
+                    <span class="stat-label">VIBE</span>
+                    <span class="stat-value">COLD & CALCULATED</span>
+                  </div>
+                  <div class="strain-stat">
+                    <span class="stat-label">ORIGIN</span>
+                    <span class="stat-value">THE FREEZER</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Culture -->
+            <div class="freezer-card culture-card full-width">
+              <div class="freezer-card-header">
+                <h3>THE MOVEMENT</h3>
+              </div>
+              <div class="freezer-card-body">
+                <p>Cold Hearted Never Broken is more than product. It's a mentality. When the world hits you with heat, you stay frozen. When they try to crack you, you don't break. This is for the ones who've been through it and came out harder. Stay icy. Stay solid. Stay cold hearted, never broken.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-inner">
+          <div class="footer-brand">
+            <img src="assets/logo.png" alt="CHNB" class="footer-logo">
+            <p>COLD HEARTED NEVER BROKEN &trade;</p>
+          </div>
+          <div class="footer-links">
+            <a href="https://instagram.com/coldheartedneverbroken" target="_blank">INSTAGRAM</a>
+            <a href="#" onclick="showSection('shop')">SHOP</a>
+            <a href="#">CONTACT</a>
+          </div>
+          <div class="footer-copy">
+            <p>&copy; 2026 Cold Hearted Never Broken. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
