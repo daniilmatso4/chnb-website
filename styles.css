@@ -1144,3 +1144,108 @@ footer {
   font-size: 12px;
   font-weight: 600;
 }
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 480px) {
+  /* Intro */
+  #intro-logo img {
+    width: 180px;
+    height: 180px;
+  }
+
+  .intro-brand-name {
+    font-size: 16px;
+    letter-spacing: 0.1em;
+  }
+
+  /* Hero */
+  .hero-logo {
+    width: 120px;
+    height: 120px;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 8vw, 72px);
+  }
+
+  .hero-tagline {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+  }
+
+  /* Brand statement */
+  .brand-statement {
+    padding: 60px 0;
+  }
+
+  .brand-text h2 {
+    font-size: 24px;
+  }
+
+  .brand-text p {
+    font-size: 14px;
+  }
+
+  /* Shop */
+  .shop-page {
+    padding-top: 70px;
+  }
+
+  .shop-header h1 {
+    font-size: 32px;
+  }
+
+  .product-showcase {
+    padding: 24px 16px 60px;
+  }
+
+  .product-title {
+    font-size: 28px;
+  }
+
+  .product-price-lg {
+    font-size: 26px;
+  }
+
+  .size-options {
+    gap: 10px;
+  }
+
+  /* Nav */
+  .nav-inner {
+    height: 56px;
+    padding: 0 16px;
+  }
+
+  .nav-logo img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nav-logo span {
+    font-size: 16px;
+  }
+
+  /* Freezer */
+  .freezer-hero {
+    height: 200px;
+  }
+
+  .freezer-hero h1 {
+    font-size: 32px;
+  }
+
+  /* Modal */
+  .modal-content {
+    padding: 32px 24px;
+    width: 95%;
+  }
+
+  /* Toast */
+  .toast {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    max-width: none;
+  }
+}
