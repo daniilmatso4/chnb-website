@@ -55,7 +55,7 @@ a {
   display: none !important;
 }
 
-/* ===== FREEZER DOOR INTRO ===== */
+/* ===== CINEMATIC VIDEO INTRO ===== */
 #intro-overlay {
   position: fixed;
   top: 0;
@@ -64,207 +64,22 @@ a {
   height: 100%;
   z-index: 10000;
   background: var(--black);
-  cursor: pointer;
-}
-
-#freezer-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: radial-gradient(ellipse at center, #1a2a35 0%, #0a0a0a 70%);
-}
-
-/* Freezer doors */
-.freezer-door {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  z-index: 10;
-  transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.door-left {
-  left: 0;
-}
-
-.door-right {
-  right: 0;
-}
-
-.door-inner {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 30%, #3a3a3a 50%, #2a2a2a 70%, #1a1a1a 100%);
-  border: 2px solid #555;
-  position: relative;
-  overflow: hidden;
-}
-
-.door-left .door-inner {
-  border-right: 3px solid #666;
-}
-
-.door-right .door-inner {
-  border-left: 3px solid #666;
-}
-
-/* Door handles */
-.door-handle {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 14px;
-  height: 120px;
-  background: linear-gradient(180deg, #777 0%, #444 50%, #777 100%);
-  border-radius: 7px;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
-}
-
-.right-handle {
-  right: 24px;
-}
-
-.left-handle {
-  left: 24px;
-}
-
-/* Door ridges */
-.door-ridges {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  padding: 40px;
-  pointer-events: none;
-}
-
-.ridge {
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
-}
-
-/* Frost on doors */
-.door-frost {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40%;
-  background: linear-gradient(to top, rgba(168, 216, 234, 0.08), transparent);
-  pointer-events: none;
-}
-
-.frost-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background:
-    radial-gradient(circle at 20% 80%, rgba(168,216,234,0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(168,216,234,0.03) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(168,216,234,0.02) 0%, transparent 70%);
-  z-index: 8;
-  pointer-events: none;
-  transition: opacity 1.5s ease;
-}
-
-/* Door opening animation */
-.doors-open .door-left {
-  transform: translateX(-100%);
-}
-
-.doors-open .door-right {
-  transform: translateX(100%);
-}
-
-.doors-open .frost-layer {
-  opacity: 0;
-}
-
-/* Logo on doors */
-#intro-logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -55%);
-  z-index: 20;
+  align-items: center;
+  justify-content: center;
   opacity: 1;
-  transition: opacity 0.6s ease;
+  transition: opacity 1.2s ease;
 }
 
-#intro-logo img {
-  width: 300px;
-  height: 300px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 60px rgba(91, 192, 222, 0.6)) drop-shadow(0 0 120px rgba(91, 192, 222, 0.3));
-  animation: logoPulse 3s ease-in-out infinite;
-}
-
-.intro-brand-name {
-  font-family: 'Oswald', sans-serif;
-  font-size: 24px;
-  letter-spacing: 0.15em;
-  text-align: center;
-  margin-top: 16px;
-  color: var(--ice-blue);
-  text-shadow: 0 0 30px rgba(91, 192, 222, 0.5);
-}
-
-.doors-open #intro-logo {
+#intro-overlay.intro-fade-out {
   opacity: 0;
+  pointer-events: none;
 }
 
-@keyframes logoPulse {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 40px rgba(91, 192, 222, 0.4)) drop-shadow(0 0 80px rgba(91, 192, 222, 0.2)); }
-  50% { transform: scale(1.05); filter: drop-shadow(0 0 60px rgba(91, 192, 222, 0.6)) drop-shadow(0 0 100px rgba(91, 192, 222, 0.3)); }
-}
-
-/* Enter prompt */
-#enter-prompt {
-  display: none;
-}
-
-@keyframes promptPulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
-/* Smoke video overlay */
-#smoke-video {
-  position: fixed;
-  top: 0;
-  left: 0;
+#intro-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0;
-  mix-blend-mode: screen;
-}
-
-#smoke-video.smoke-active {
-  opacity: 1;
-}
-
-#smoke-video.smoke-fade {
-  transition: opacity 8s ease-out;
-  opacity: 0;
-}
-
-/* Intro fade out */
-.intro-exit {
-  opacity: 0 !important;
-  transition: opacity 0.4s ease !important;
-  pointer-events: none !important;
 }
 
 /* ===== NAVIGATION ===== */
@@ -517,6 +332,160 @@ a {
 
 .auth-switch a:hover {
   text-decoration: underline;
+}
+
+/* ===== SUBSCRIBE MODAL ===== */
+.subscribe-content {
+  max-width: 480px;
+  padding: 40px 36px;
+  border: 1px solid rgba(168, 216, 234, 0.15);
+  background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
+}
+
+.subscribe-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.lock-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, var(--ice-blue), var(--ice-glow));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--black);
+  box-shadow: 0 0 30px rgba(91, 192, 222, 0.3);
+}
+
+.subscribe-header h2 {
+  font-size: 28px;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.subscribe-tagline {
+  color: var(--gray);
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}
+
+.subscribe-pricing {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: rgba(168, 216, 234, 0.04);
+  border: 1px solid rgba(168, 216, 234, 0.08);
+  border-radius: 12px;
+}
+
+.price-original {
+  font-family: 'Oswald', sans-serif;
+  font-size: 22px;
+  color: var(--gray);
+  text-decoration: line-through;
+  opacity: 0.5;
+  margin-bottom: 4px;
+}
+
+.price-original span {
+  font-size: 14px;
+}
+
+.price-current {
+  font-family: 'Oswald', sans-serif;
+  font-size: 48px;
+  color: var(--ice-blue);
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 20px rgba(91, 192, 222, 0.3);
+}
+
+.price-current span {
+  font-size: 20px;
+  color: var(--frost);
+  opacity: 0.7;
+}
+
+.discount-badge {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 14px;
+  background: linear-gradient(135deg, var(--ice-blue), var(--ice-glow));
+  color: var(--black);
+  font-family: 'Oswald', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  border-radius: 20px;
+}
+
+.subscribe-perks {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.perk-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--gray);
+}
+
+.perk-check {
+  color: var(--ice-blue);
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.subscribe-form .card-label {
+  display: block;
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--gray);
+  margin-bottom: 6px;
+}
+
+.card-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn-subscribe {
+  width: 100%;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, var(--ice-blue), var(--ice-glow));
+  color: var(--black);
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: transform 0.2s, box-shadow 0.3s;
+  text-transform: uppercase;
+}
+
+.btn-subscribe:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(91, 192, 222, 0.4);
+}
+
+.subscribe-disclaimer {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 11px;
+  color: #555;
+  line-height: 1.5;
 }
 
 /* ===== HERO ===== */
@@ -851,7 +820,7 @@ a {
   }
 }
 
-/* ===== FREEZER PAGE (21+) ===== */
+/* ===== FREEZER PAGE (Subscribers) ===== */
 .freezer-page {
   padding-top: 70px;
 }
@@ -1147,17 +1116,6 @@ footer {
 
 /* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 480px) {
-  /* Intro */
-  #intro-logo img {
-    width: 180px;
-    height: 180px;
-  }
-
-  .intro-brand-name {
-    font-size: 16px;
-    letter-spacing: 0.1em;
-  }
-
   /* Hero */
   .hero-logo {
     width: 120px;
@@ -1239,6 +1197,16 @@ footer {
   .modal-content {
     padding: 32px 24px;
     width: 95%;
+  }
+
+  .subscribe-content {
+    padding: 28px 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .price-current {
+    font-size: 40px;
   }
 
   /* Toast */

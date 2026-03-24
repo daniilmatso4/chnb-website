@@ -18,35 +18,35 @@ const products = [
 
 // ----- State -----
 let currentUser = JSON.parse(localStorage.getItem("chnb_user")) || null;
+let isSubscribed = JSON.parse(localStorage.getItem("chnb_subscribed")) || false;
 
-// ----- Intro Animation -----
+// ----- Cinematic Video Intro -----
 document.addEventListener("DOMContentLoaded", () => {
   const intro = document.getElementById("intro-overlay");
-  const container = document.getElementById("freezer-container");
-  const smokeVideo = document.getElementById("smoke-video");
+  const video = document.getElementById("intro-video");
 
-  // Auto-start: show logo on doors briefly, then open
-  setTimeout(() => {
-    container.classList.add("doors-open");
-    smokeVideo.play();
-    smokeVideo.classList.add("smoke-active");
+  // Play the intro video
+  video.play();
 
-    // After doors open, transition to main site
+  // When video ends, fade out intro and show the site
+  video.addEventListener("ended", () => {
+    intro.classList.add("intro-fade-out");
+
     setTimeout(() => {
-      intro.classList.add("intro-exit");
-      setTimeout(() => {
-        intro.style.display = "none";
-        document.getElementById("main-site").classList.remove("hidden");
-        initSite();
-
-        // Start slow fade of smoke over the main site
-        setTimeout(() => {
-          smokeVideo.classList.remove("smoke-active");
-          smokeVideo.classList.add("smoke-fade");
-        }, 500);
-      }, 400);
+      intro.style.display = "none";
+      document.getElementById("main-site").classList.remove("hidden");
+      initSite();
     }, 1200);
-  }, 1000);
+  });
+
+  // Fallback: if video fails to load, skip to site after 2s
+  video.addEventListener("error", () => {
+    setTimeout(() => {
+      intro.style.display = "none";
+      document.getElementById("main-site").classList.remove("hidden");
+      initSite();
+    }, 2000);
+  });
 });
 
 // ----- Initialize Site -----
@@ -190,7 +190,9 @@ function handleSignup() {
 
 function handleLogout() {
   currentUser = null;
+  isSubscribed = false;
   localStorage.removeItem("chnb_user");
+  localStorage.removeItem("chnb_subscribed");
   updateAuthState();
   showSection("home");
   showToast("You've been signed out", "success");
@@ -213,14 +215,8 @@ function updateAuthState() {
     if (accountLink) accountLink.innerHTML = badgeHTML;
     if (mobileAccountLink) mobileAccountLink.innerHTML = "SIGN OUT";
 
-    // Show/hide freezer tab based on 21+ status
-    freezerLinks.forEach(link => {
-      if (currentUser.isOver21) {
-        link.classList.remove("hidden");
-      } else {
-        link.classList.add("hidden");
-      }
-    });
+    // Show freezer link for all logged-in users
+    freezerLinks.forEach(link => link.classList.remove("hidden"));
   } else {
     if (accountLink) accountLink.textContent = "ACCOUNT";
     if (mobileAccountLink) mobileAccountLink.textContent = "ACCOUNT";
@@ -234,6 +230,77 @@ function updateAuthState() {
       showSection("home");
     }
   }
+}
+
+// ----- Freezer Access (Subscription Gate) -----
+function accessFreezer() {
+  if (!currentUser) {
+    openAuthModal();
+    return;
+  }
+
+  if (isSubscribed) {
+    showSection("freezer");
+  } else {
+    openSubscribeModal();
+  }
+}
+
+function openSubscribeModal() {
+  document.getElementById("subscribe-modal").classList.remove("hidden");
+}
+
+function closeSubscribeModal() {
+  document.getElementById("subscribe-modal").classList.add("hidden");
+}
+
+function formatCardNumber(input) {
+  let value = input.value.replace(/\D/g, "");
+  value = value.replace(/(\d{4})(?=\d)/g, "$1 ");
+  input.value = value;
+}
+
+function formatExpiry(input) {
+  let value = input.value.replace(/\D/g, "");
+  if (value.length >= 2) {
+    value = value.substring(0, 2) + "/" + value.substring(2);
+  }
+  input.value = value;
+}
+
+function handleSubscribe() {
+  const name = document.getElementById("card-name").value.trim();
+  const number = document.getElementById("card-number").value.replace(/\s/g, "");
+  const expiry = document.getElementById("card-expiry").value;
+  const cvv = document.getElementById("card-cvv").value;
+
+  if (!name || !number || !expiry || !cvv) {
+    showToast("Please fill in all card details", "error");
+    return;
+  }
+
+  if (number.length < 13) {
+    showToast("Please enter a valid card number", "error");
+    return;
+  }
+
+  if (!/^\d{2}\/\d{2}$/.test(expiry)) {
+    showToast("Please enter a valid expiry (MM/YY)", "error");
+    return;
+  }
+
+  if (cvv.length < 3) {
+    showToast("Please enter a valid CVV", "error");
+    return;
+  }
+
+  // Mark as subscribed
+  isSubscribed = true;
+  localStorage.setItem("chnb_subscribed", JSON.stringify(true));
+
+  closeSubscribeModal();
+  showSection("freezer");
+  showToast("Welcome to The Freezer. You're in.", "success");
 }
 
 // ----- Toast Notifications -----
@@ -274,6 +341,7 @@ function setupScrollAnimations() {
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("modal-backdrop")) {
     closeModal();
+    closeSubscribeModal();
   }
 });
 
@@ -281,5 +349,6 @@ document.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closeModal();
+    closeSubscribeModal();
   }
 });

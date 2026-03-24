@@ -9,53 +9,12 @@
 </head>
 <body>
 
-  <!-- ===== FREEZER DOOR INTRO ===== -->
+  <!-- ===== CINEMATIC VIDEO INTRO ===== -->
   <div id="intro-overlay">
-    <div id="freezer-container">
-      <!-- Frost buildup on the doors -->
-      <div class="frost-layer"></div>
-
-      <!-- Left door -->
-      <div class="freezer-door door-left">
-        <div class="door-inner">
-          <div class="door-handle right-handle"></div>
-          <div class="door-ridges">
-            <div class="ridge"></div>
-            <div class="ridge"></div>
-            <div class="ridge"></div>
-          </div>
-          <div class="door-frost"></div>
-        </div>
-      </div>
-
-      <!-- Right door -->
-      <div class="freezer-door door-right">
-        <div class="door-inner">
-          <div class="door-handle left-handle"></div>
-          <div class="door-ridges">
-            <div class="ridge"></div>
-            <div class="ridge"></div>
-            <div class="ridge"></div>
-          </div>
-          <div class="door-frost"></div>
-        </div>
-      </div>
-
-      <!-- Logo in the center (visible on doors) -->
-      <div id="intro-logo">
-        <img src="assets/logo.png" alt="Cold Hearted Never Broken">
-        <p class="intro-brand-name">COLD HEARTED<br>NEVER BROKEN</p>
-      </div>
-
-      <!-- Click prompt -->
-      <div id="enter-prompt">ENTER THE FREEZER</div>
-    </div>
+    <video id="intro-video" muted playsinline preload="auto">
+      <source src="assets/intro.mp4" type="video/mp4">
+    </video>
   </div>
-
-  <!-- Smoke video overlay (persists after intro) -->
-  <video id="smoke-video" muted loop playsinline preload="auto">
-    <source src="assets/smoke_web.mp4" type="video/mp4">
-  </video>
 
   <!-- ===== AUTH MODAL ===== -->
   <div id="auth-modal" class="modal hidden">
@@ -100,6 +59,72 @@
     </div>
   </div>
 
+  <!-- ===== SUBSCRIPTION MODAL ===== -->
+  <div id="subscribe-modal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content subscribe-content">
+      <button class="modal-close" onclick="closeSubscribeModal()">&times;</button>
+
+      <div class="subscribe-header">
+        <div class="lock-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+          </svg>
+        </div>
+        <h2>FREEZER LOUNGE ACCESS</h2>
+        <p class="subscribe-tagline">You tryna get in? Say less.</p>
+      </div>
+
+      <div class="subscribe-pricing">
+        <div class="price-original">$100<span>/mo</span></div>
+        <div class="price-current">$50<span>/mo</span></div>
+        <div class="discount-badge">50% OFF — STAY COLD</div>
+      </div>
+
+      <div class="subscribe-perks">
+        <div class="perk-item">
+          <span class="perk-check">&#10003;</span>
+          <span>First dibs on every drop — before it hits the site</span>
+        </div>
+        <div class="perk-item">
+          <span class="perk-check">&#10003;</span>
+          <span>Exclusive content, strain info & behind the scenes</span>
+        </div>
+        <div class="perk-item">
+          <span class="perk-check">&#10003;</span>
+          <span>Full access to The Freezer Lounge</span>
+        </div>
+        <div class="perk-item">
+          <span class="perk-check">&#10003;</span>
+          <span>Dip whenever you want — cancel anytime, no drama</span>
+        </div>
+      </div>
+
+      <div id="subscribe-form" class="subscribe-form">
+        <div class="form-group">
+          <label class="card-label">NAME ON CARD</label>
+          <input type="text" id="card-name" placeholder="Who's paying?" required>
+        </div>
+        <div class="form-group">
+          <label class="card-label">CARD NUMBER</label>
+          <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required oninput="formatCardNumber(this)">
+        </div>
+        <div class="card-row">
+          <div class="form-group">
+            <label class="card-label">EXPIRY</label>
+            <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" required oninput="formatExpiry(this)">
+          </div>
+          <div class="form-group">
+            <label class="card-label">CVV</label>
+            <input type="text" id="card-cvv" placeholder="123" maxlength="4" required>
+          </div>
+        </div>
+        <button class="btn-subscribe" onclick="handleSubscribe()">SLIDE IN — $50/MO</button>
+        <p class="subscribe-disclaimer">$50 hits your card today. Billed monthly. Bounce anytime.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== MAIN SITE ===== -->
   <div id="main-site" class="hidden">
 
@@ -113,7 +138,7 @@
         <div class="nav-links">
           <a href="#" class="nav-link active" data-section="home" onclick="showSection('home')">HOME</a>
           <a href="#" class="nav-link" data-section="shop" onclick="showSection('shop')">SHOP</a>
-          <a href="#" class="nav-link freezer-link hidden" data-section="freezer" onclick="showSection('freezer')">FREEZER</a>
+          <a href="#" class="nav-link freezer-link hidden" data-section="freezer" onclick="accessFreezer()">FREEZER</a>
           <a href="#" class="nav-link" id="account-link" onclick="openAuthModal()">ACCOUNT</a>
         </div>
         <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
@@ -124,7 +149,7 @@
       <div class="mobile-menu hidden">
         <a href="#" class="nav-link" onclick="showSection('home'); toggleMobileMenu()">HOME</a>
         <a href="#" class="nav-link" onclick="showSection('shop'); toggleMobileMenu()">SHOP</a>
-        <a href="#" class="nav-link freezer-link hidden" onclick="showSection('freezer'); toggleMobileMenu()">FREEZER</a>
+        <a href="#" class="nav-link freezer-link hidden" onclick="accessFreezer(); toggleMobileMenu()">FREEZER</a>
         <a href="#" class="nav-link" id="mobile-account-link" onclick="openAuthModal(); toggleMobileMenu()">ACCOUNT</a>
       </div>
     </nav>
@@ -206,13 +231,13 @@
       </div>
     </section>
 
-    <!-- ===== FREEZER SECTION (21+ only) ===== -->
+    <!-- ===== FREEZER SECTION (Subscribers Only) ===== -->
     <section id="section-freezer" class="page-section hidden">
       <div class="freezer-page">
         <div class="freezer-hero">
           <div class="freezer-fog"></div>
           <h1>THE FREEZER</h1>
-          <p class="freezer-subtitle">EXCLUSIVE ACCESS &bull; 21+ ONLY</p>
+          <p class="freezer-subtitle">SUPER EXCLUSIVE &bull; SUBSCRIBERS ONLY</p>
         </div>
 
         <div class="container">
